@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform1
       objectReference: {fileID: 0}
+    - target: {fileID: 142611451992287177, guid: 12b57f2c650faee4588e43e257a44e5d, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     - target: {fileID: 1536686876987607423, guid: 12b57f2c650faee4588e43e257a44e5d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 32.4
@@ -187,6 +191,10 @@ PrefabInstance:
     - target: {fileID: 142611451992287177, guid: 12b57f2c650faee4588e43e257a44e5d, type: 3}
       propertyPath: m_Name
       value: Platform1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 142611451992287177, guid: 12b57f2c650faee4588e43e257a44e5d, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 1536686876987607423, guid: 12b57f2c650faee4588e43e257a44e5d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -467,7 +475,7 @@ GameObject:
   - component: {fileID: 623505987}
   m_Layer: 0
   m_Name: pls_01
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -696,6 +704,9 @@ GameObject:
   - component: {fileID: 1439421638}
   - component: {fileID: 1439421641}
   - component: {fileID: 1439421642}
+  - component: {fileID: 1439421643}
+  - component: {fileID: 1439421644}
+  - component: {fileID: 1439421645}
   m_Layer: 0
   m_Name: character
   m_TagString: Untagged
@@ -729,7 +740,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &1439421639
 SpriteRenderer:
   serializedVersion: 2
@@ -863,6 +874,76 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1439421643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439421637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 473d12f2064f3574b9f84274dbe23a0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInputController
+  MoveData: 0
+  Isjumping: 0
+  IsCrouching: 0
+--- !u!114 &1439421644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439421637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d69f7456bc4c2e4d9775cf3963891d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  InputController: {fileID: 0}
+  rig: {fileID: 1439421638}
+  MoveSpeed: 500
+  Sprite: {fileID: 0}
+  JumpForce: 30
+  IsGround: 0
+  animator: {fileID: 0}
+--- !u!58 &1439421645
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439421637}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: -1.79}
+  m_Radius: 0.23
 --- !u!1001 &3896004025176036674
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -874,6 +955,10 @@ PrefabInstance:
     - target: {fileID: 142611451992287177, guid: 12b57f2c650faee4588e43e257a44e5d, type: 3}
       propertyPath: m_Name
       value: pls_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 142611451992287177, guid: 12b57f2c650faee4588e43e257a44e5d, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 1536686876987607423, guid: 12b57f2c650faee4588e43e257a44e5d, type: 3}
       propertyPath: m_LocalPosition.x
