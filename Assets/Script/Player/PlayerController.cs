@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     public bool IsGround;
 
     public Animator animator;
+
+    public bool OnJump;
+    public bool OnFall;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,6 +31,12 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate()
+    {
+        movement();
+        jump();
+    }
+
+    private void movement()
     {
         rig.linearVelocityX = (InputController.MoveData * MoveSpeed) * Time.deltaTime;
 
@@ -48,10 +57,22 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetInteger("Movement", 0);
         }
+    }
 
+    private void jump()
+    {
         if (InputController.Isjumping && IsGround)
         {
             rig.linearVelocity = new Vector2(0, JumpForce);
+            animator.SetBool("jump",true);
+            OnJump = true;
+        }
+
+        if (rig.linearVelocityY < 0 && !IsGround)
+        {
+            OnFall = false;
+            animator.SetBool("fall", true);
+            animator.SetBool("jump", false);
         }
     }
 
@@ -60,6 +81,8 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             IsGround = true;
+            animator.SetBool("fall", false);
+            animator.SetBool("jump", false);
         }
     }
 
