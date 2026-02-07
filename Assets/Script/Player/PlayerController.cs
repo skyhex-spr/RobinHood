@@ -19,6 +19,15 @@ public class PlayerController : MonoBehaviour
 
     public bool OnJump;
     public bool OnFall;
+
+    [Header("Shoot")]
+    public ArrowProjectile ArrowPrefab;
+    public Transform ShootPoint;
+    public float Shootcooldown;
+
+    private float shootTimer;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,10 +45,30 @@ public class PlayerController : MonoBehaviour
         jump();
     }
 
+    private void Update()
+    {
+        if(shootTimer > 0)
+            shootTimer -= Time.deltaTime;
+
+        if (InputController.ShootPressed && IsGround)
+        {
+            animator.SetTrigger("shoot");
+        }
+        if (InputController.MaleePressed && IsGround)
+        {
+            animator.SetTrigger("malee");
+        }
+    }
+
     private void movement()
     {
-        rig.linearVelocityX = (InputController.MoveData * MoveSpeed) * Time.deltaTime;
+        if (IsShootingAnimation() || IsMaleeAnimation())
+        {
+            rig.linearVelocityX = 0;
+            return;
+        }
 
+        rig.linearVelocityX = (InputController.MoveData * MoveSpeed) * Time.deltaTime;
 
         //right
         if (InputController.MoveData == 1)
@@ -61,6 +90,9 @@ public class PlayerController : MonoBehaviour
 
     private void jump()
     {
+        if (IsShootingAnimation() || IsMaleeAnimation())
+            return;
+
         if (InputController.Isjumping && IsGround)
         {
             rig.linearVelocity = new Vector2(0, JumpForce);
@@ -74,6 +106,47 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("fall", true);
             animator.SetBool("jump", false);
         }
+    }
+
+    private bool IsShootingAnimation()
+    {
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+        if (state.IsTag("shoot"))
+            return true;
+        else
+            return false;
+    }
+
+    private bool IsMaleeAnimation()
+    {
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+        if (state.IsTag("malee"))
+            return true;
+        else
+            return false;
+    }
+
+    public void TryShootArrow()
+    {
+        if (ArrowPrefab == null)
+            return;
+
+        if (shootTimer > 0)
+            return;
+
+        shootTimer = Shootcooldown;
+
+        Vector2 dir;
+
+        if (Sprite != null && Sprite.flipX)
+            dir = Vector2.left;
+        else 
+            dir = Vector2.right;
+
+        Vector3 spawnPos = ShootPoint.position;
+
+        ArrowProjectile arrow = Instantiate(ArrowPrefab, spawnPos, Quaternion.identity);
+        arrow.Init(dir);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

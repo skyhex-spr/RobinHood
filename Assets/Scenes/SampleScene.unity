@@ -451,7 +451,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.7890625, y: 6.210001, z: -30}
+  m_LocalPosition: {x: -5.817505, y: 6.210001, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -634,6 +634,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12b57f2c650faee4588e43e257a44e5d, type: 3}
+--- !u!1 &738190120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 738190121}
+  m_Layer: 0
+  m_Name: ShootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &738190121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738190120}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1439421640}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &781286541
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,6 +971,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1698816863}
+  - {fileID: 738190121}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &1439421641
@@ -1016,6 +1048,8 @@ MonoBehaviour:
   MoveData: 0
   Isjumping: 0
   IsCrouching: 0
+  ShootPressed: 0
+  MaleePressed: 0
 --- !u!114 &1439421644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1037,6 +1071,9 @@ MonoBehaviour:
   animator: {fileID: 0}
   OnJump: 0
   OnFall: 0
+  ArrowPrefab: {fileID: 6999539717035803952, guid: 856bb8d4f80752e41bbe207d38f13920, type: 3}
+  ShootPoint: {fileID: 738190121}
+  Shootcooldown: 0.25
 --- !u!58 &1439421645
 CircleCollider2D:
   m_ObjectHideFlags: 0

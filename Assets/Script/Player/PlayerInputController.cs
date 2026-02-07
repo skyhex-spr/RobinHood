@@ -9,6 +9,9 @@ public class PlayerInputController : MonoBehaviour
     public bool Isjumping;
     public bool IsCrouching;
 
+    public bool ShootPressed;
+    public bool MaleePressed;
+
     private PlayerInput playerInput;
 
     private void Awake()
@@ -29,6 +32,9 @@ public class PlayerInputController : MonoBehaviour
         playerInput.Player.Crouch.started += OnCrouchStart;
         playerInput.Player.Crouch.canceled += OnCrouchEnd;
 
+        playerInput.Player.Shoot.performed += OnShootPerformed;
+        playerInput.Player.Malee.performed += OnMaleePerformed;
+
     }
 
 
@@ -43,7 +49,16 @@ public class PlayerInputController : MonoBehaviour
         playerInput.Player.Crouch.started -= OnCrouchStart;
         playerInput.Player.Crouch.canceled -= OnCrouchEnd;
 
+        playerInput.Player.Shoot.performed -= OnShootPerformed;
+        playerInput.Player.Malee.performed -= OnMaleePerformed;
+
         playerInput.Player.Disable();
+    }
+
+    private void LateUpdate()
+    {
+        ShootPressed = false;
+        MaleePressed = false;
     }
 
     private void OnMove(InputAction.CallbackContext ctx)
@@ -68,5 +83,16 @@ public class PlayerInputController : MonoBehaviour
     {
         IsCrouching = false;
     }
+
+    private void OnShootPerformed(InputAction.CallbackContext ctx)
+    {
+        ShootPressed = true;
+    }
+
+    private void OnMaleePerformed(InputAction.CallbackContext ctx)
+    {
+        MaleePressed = true;
+    }
+
 
 }
