@@ -126,6 +126,11 @@ public class PlayerController : MonoBehaviour
             return false;
     }
 
+    public void Hit()
+    {
+        animator.SetTrigger("hit");
+    }
+
     public void TryShootArrow()
     {
         if (ArrowPrefab == null)

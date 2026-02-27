@@ -33,10 +33,22 @@ public class EnemyController : MonoBehaviour
     private Transform target;
     private bool isWaiting = false;
 
+    public bool IsHitting;
+    public bool IsDead;
+
+    public int Health = 3;
+
+    private Vector2 attackDir = Vector2.right;
+    public float AttackDinstance = 10;
+
+    public PlayerController player;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
+
+        player = FindAnyObjectByType<PlayerController>();
     }
 
     private void FixedUpdate()
@@ -67,7 +79,20 @@ public class EnemyController : MonoBehaviour
 
         if (isWaiting)
         {
-            Animator.SetInteger("move", 0);
+            //Animator.SetInteger("move", 0);
+
+            attackDir = spriteRenderer.flipX ? Vector2.left : Vector2.right;
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, attackDir, AttackDinstance, targetLayer);
+
+            if (hit)
+            {
+                Animator.SetTrigger("attack");
+            }
+            else
+            {
+                Animator.SetInteger("move", 0);
+            }
 
             // Still too close -> keep idle
             if (distanceToPlayer < releaseDistance)
@@ -108,6 +133,9 @@ public class EnemyController : MonoBehaviour
 
     private void MoveToX(float targetX, float speed, float minX, float maxX)
     {
+        if (IsHitting)
+            return;
+
         Vector2 pos = rb.position;
 
         float nextX = Mathf.MoveTowards(pos.x, targetX, speed * Time.fixedDeltaTime);
@@ -144,6 +172,37 @@ public class EnemyController : MonoBehaviour
         spriteRenderer.flipX = targetX < rb.position.x;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("arrow"))
+        {
+            Destroy(collision.gameObject);
+            Hit();
+        }
+    }
+
+    private void Hit()
+    {
+        Animator.SetTrigger("hit");
+        IsHitting = true;
+
+        Health--;
+        if (Health == 0)
+        {
+            Animator.SetTrigger("dead");
+            Destroy(gameObject, 2);
+        }
+    }
+
+    public void StopHittong()
+    {
+        IsHitting = false;
+    }
+
+    public void AttackToPlayer()
+    {
+        player.Hit();
+    }
 
     private void OnDrawGizmosSelected()
     {
@@ -162,6 +221,10 @@ public class EnemyController : MonoBehaviour
             Gizmos.DrawLine(pointA.position, pointB.position);
             Gizmos.DrawWireSphere(pointA.position, 0.15f);
             Gizmos.DrawWireSphere(pointB.position, 0.15f);
+
+            Gizmos.color = Color.purple;
+            Gizmos.DrawLine(transform.position, transform.position + (Vector3)(attackDir.normalized * AttackDinstance));
+
         }
     }
 
